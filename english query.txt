@@ -1,0 +1,35 @@
+iv) For one of the 3 periods and one of the genre combinations given above, write an SQL query to identify the top 10 movies, based on movie rating. Consider only those movies that have received at least 50000 votes. Output the movie names, ratings, and optionally other details, such as lead actor/actress names. You are free to choose any period and genre combination.
+IMPORTANT: Remember, when exploring a genre combination like Comedy, Romance you need to consider the movies which have at least these two genres present in their corresponding list of genres. For example, movies with “Comedy,Drama,Romance”, “Comedy,Family,Romance”, “Comedy,Romance, etc. satisfy the requirement.
+Also, someone is a lead actor/actress if the ordering attribute in the title_principals table is 1.
+v) Using the EXPLAIN statement of Oracle, generate the query plan used in the query in (iv) and discuss how the query is evaluated.
+Refer: https://docs.oracle.com/cd/B19306_01/server.102/b14211/ex_plan.htm#i16971
+
+Set 2.  
+a) Retrieve the average ratings of the movies for each year from 2010 to 2015. 
+Consider the movies having Drama, Horror, Sci-Fi or Thriller as one of their 
+genres.  
+Should 6 output rows, one for each year. 
+ 
+start 
+year       YEARLY_AVG 
+---------- ---------- 
+2010       ??? 
+2011       ??? 
+2012       ??? 
+ 
+b) Retrieve the average ratings of the movies by genre for each year during 
+2010 and 2015 for each genre, Drama, Horror, Sci-Fi and Thriller. 
+Should have 24 rows of output, for 6 years and 4 genres. 
+ 
+start 
+year        GENRES   YEARLY_AVG 
+----------   ----------  -------------- 
+2010   Drama  ??? 
+2010   Horror  ??? 
+2010   Sci-Fi  ??? 
+2010   Thriller  ??? 
+ 
+2011   Drama  ??? 
+2011   Horror  ??? 
+2011   Sci-Fi  ??? 
+2011   Thriller  ??? 

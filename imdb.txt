@@ -1,0 +1,90 @@
+SQL> spool on
+SQL> spool imdb.txt
+SQL> SELECT
+        tt_bs.START  2  YEAR AS YEAR,
+        ROU  3  ND(AVG(tt_rt.AVERAGERATING),8) AS YEARLY_AVG
+FROM TITL  4  E_BASICS tt_bs
+          JOIN TITLE  5  _RATINGS tt_rt ON tt_bs.TCONST = tt_rt.TCONST
+WHERE TIT  6  LETYPE = 'movie'
+  7             AND tt_bs.STARTYEAR > '2009' AND tt_bs.STARTYEAR < '2016'
+                AND (GE  8  NRES LIKE '%Drama%' OR GENRES LIKE '%Horror%' OR GENRES LIKE '%Sci-Fi%' OR GENRES LIKE '%Thriller%')
+G  9  ROUP BY tt_bs.STARTYEAR ORDER BY tt_bs.STARTYEAR;
+
+YEAR YEARLY_AVG
+---- ----------
+2010 6.04827679
+2011 6.10878672
+2012 6.13470418
+2013 6.16364651
+2014 6.17464262
+2015 6.15918188
+
+6 rows selected.
+
+SQL> SELECT     YEAR,   GENRE,  YEARLY_AVG
+FROM  2   (
+        S  3  ELECT             tt_bs.STARTYEAR AS YEAR, 'Drama' AS GENRE,AVG(tt_rt.AVERAGERATING) AS YEARLY_AVG
+        F  4  ROM TITLE_BASICS tt_bs
+  5             JOIN TITLE_RATINGS tt_rt ON tt_bs.TCONST = tt_rt.TCONST
+        W  6  HERE TITLETYPE = 'movie'
+                  7     AND tt_bs.STARTYEAR > '2009' AND tt_bs.STARTYEAR < '2016'
+  8                     AND GENRES LIKE '%Drama%'
+        GROUP  9   BY tt_bs.STARTYEAR
+        UNI 10  ON
+        S 11  ELECT
+                tt_bs.S 12  TARTYEAR AS YEAR,'Horror' AS GENRE,AVG(tt_rt.AVERAGERATING) AS YEARLY_AVG
+         13  FROM TITLE_BASICS tt_bs JOIN TITLE_RATINGS tt_rt ON tt_bs.TCONST = tt_rt.TCONST
+        WHERE  14  TITLETYPE = 'movie'
+                        AND t 15  t_bs.STARTYEAR > '2009' AND tt_bs.STARTYEAR < '2016'
+         16             AND GENRES LIKE '%Horror%'
+        GROUP 17   BY tt_bs.STARTYEAR
+        UNION
+        SELECT
+                t 18   19   20  t_bs.STARTYEAR AS YEAR, 'Sci-Fi' AS GENRE,      AVG(tt_rt.AVERAGERATING) AS YEARLY_AVG
+        FRO 21  M TITLE_BASICS tt_bs JOIN TITLE_RATINGS tt_rt ON tt_bs.TCONST = tt_rt.TCONST
+         22  WHERE TITLETYPE = 'movie'
+ 23                     AND tt_bs.STARTYEAR > '2009' AND tt_bs.STARTYEAR < '2016'
+                        AN 24  D GENRES LIKE '%Sci-Fi%'
+        GROUP B 25  Y tt_bs.STARTYEAR
+        UNION 26
+        SEL 27  ECT
+                tt_bs.STA 28  RTYEAR AS YEAR, 'Thriller' AS GENRE,AVG(tt_rt.AVERAGERATING) AS YEARLY_AVG
+        FROM  29  TITLE_BASICS tt_bs JOIN TITLE_RATINGS tt_rt ON tt_bs.TCONST = tt_rt.TCONST
+        WH 30  ERE TITLETYPE = 'movie'
+                        A 31  ND tt_bs.STARTYEAR > '2009' AND tt_bs.STARTYEAR < '2016'
+                 32     AND GENRES LIKE '%Thriller%'
+        GROUP BY  33  tt_bs.STARTYEAR
+) finalTable
+ORDER BY 34   35   YEAR, GENRE;
+
+YEAR GENRE    YEARLY_AVG
+---- -------- ----------
+2010 Drama    6.32638102
+2010 Horror   4.92403846
+2010 Sci-Fi   5.37908163
+2010 Thriller 5.52233728
+2011 Drama     6.3685352
+2011 Horror   4.98993902
+2011 Sci-Fi   5.44526316
+2011 Thriller 5.68531571
+2012 Drama     6.4406874
+2012 Horror   5.09019108
+2012 Sci-Fi   5.38666667
+2012 Thriller 5.66996149
+2013 Drama    6.45925704
+2013 Horror   5.05578674
+2013 Sci-Fi   5.44787645
+2013 Thriller 5.65238612
+2014 Drama    6.49834586
+2014 Horror   5.10902696
+2014 Sci-Fi   5.33492063
+2014 Thriller 5.63001072
+2015 Drama    6.45345238
+2015 Horror   5.02026538
+2015 Sci-Fi   5.52148148
+2015 Thriller 5.74272635
+
+24 rows selected.
+
+SQL> spool off
+SQL>
